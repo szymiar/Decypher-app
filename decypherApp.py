@@ -1,7 +1,7 @@
 #! python3
 import pyperclip, sys, pprint
 
-## Dodaj metode : display all possibilities itd
+## Skróć jakoś maina , rozwijaj dalej ( GUI)
 
 
 
@@ -13,8 +13,9 @@ def enteringSentence():
 	while True:
 		try:
 			decision1 = int(input())
-		except ValueError:
+		except (ValueError,UnboundLocalError):
 			print("Please enter a number")
+			continue
 		
 		if decision1 == 1:
 			sentence = pyperclip.paste()
@@ -49,12 +50,6 @@ def decode(table,shift):
 		j+=1
 	return table
 	
-
-#This method will display all of the possible shifts( if u find a good dictionary,
-#Your program will find existing words itself
-def displayAllPosibilities(table):
-	for i in table:
-		z = alphabet.index(i)
 		
 
 #This method will return shifted letter
@@ -71,6 +66,19 @@ def shifting(index,shift):
 				index = index + 26
 	return shiftedLetter
 
+#This method will display all of the possible shifts( if u find a good dictionary,
+#Your program will find existing words itself
+def displayAllPosibilities(table):
+	print(table)
+	for j in range(25):
+		elo=table
+		tab = []
+		tab = decode(elo,1)
+		displayDecoded(tab)
+		print("Shift: "+str(j))
+		print("")
+
+
 #This method wil display decoded sentence
 def displayDecoded(table):
 	pyperclip.copy(''.join(table))
@@ -84,15 +92,26 @@ def Main():
 	print("Type 1 to copy the sentence from your clipboard, or type 2 to enter the sentence")
 
 	zdanie = enteringSentence()
-	print("Enter your shift")
+	print("Press 1 to enter your shift, or enter 2 to display all possibilities: ")
 	while True:
 		try:
-			shft = int(input())
-			break
-		except ValueError:
-			print("Enter number")
-	tablica = decode(zdanie, shft)
-	displayDecoded(tablica)
+			inp = int(input())
+		except ValueError:	
+			print("Enter a number")
+			continue
+		break
+	if inp == 1:			
+		print("Enter your shift")
+		while True:
+			try:
+				shft = int(input())
+				break
+			except ValueError:
+				print("Enter number")
+		tablica = decode(zdanie, shft)
+		displayDecoded(tablica)
+	else:
+		displayAllPosibilities(zdanie)
 	
 
 
