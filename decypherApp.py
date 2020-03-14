@@ -1,8 +1,7 @@
 #! python3
 import pyperclip, sys, pprint
 
-## rozwiąz problem tablicy ze wyrzuca poza zakres , try i except index error, i wtedy reszte
-## od zera dodajesz
+## Dodaj metode : display all possibilities itd
 
 
 
@@ -61,10 +60,15 @@ def displayAllPosibilities(table):
 #This method will return shifted letter
 def shifting(index,shift):   
 	index+=shift
-	try:
-		shiftedLetter = alphabet[index]
-	except IndexError:
-		
+	while True:
+		try:
+			shiftedLetter = alphabet[index]
+			break
+		except IndexError:
+			if index > 25:
+				index = index - 26
+			else :
+				index = index + 26
 	return shiftedLetter
 
 #This method wil display decoded sentence
